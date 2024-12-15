@@ -4,7 +4,9 @@
   "description": "Blog app",
   "main": ".",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "client": "cd app && npm run dev",
+    "server": "cd server && npm run dev",
+    "lint": "cd app && npm run lint && cd ../server && npm run lint"
   },
   "repository": {
     "type": "git",

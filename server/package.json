@@ -2,13 +2,28 @@
   "name": "@writeup/server",
   "version": "1.0.0",
   "description": "WriteUp backend",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/index.ts",
+    "lint": "eslint .",
+    "prebuild": "npx prisma generate",
+    "build": "tsc -b",
+    "prestart": "npm run build",
+    "start": "node dist/index.js"
   },
   "keywords": [
     "backend",
     "prisma",
     "postgres",
     "node"
-  ]
+  ],
+  "dependencies": {
+    "@prisma/client": "^6.0.1",
+    "express": "^4.21.2",
+    "prisma": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "nodemon": "^3.1.9"
+  }
 }
