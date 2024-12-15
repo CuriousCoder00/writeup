@@ -1,0 +1,14 @@
+{
+  "name": "@writeup/server",
+  "version": "1.0.0",
+  "description": "WriteUp backend",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "backend",
+    "prisma",
+    "postgres",
+    "node"
+  ]
+}
