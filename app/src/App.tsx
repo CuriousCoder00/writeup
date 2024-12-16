@@ -1,8 +1,14 @@
+import { Route, Routes } from "react-router";
+import LoginPage from "./pages/auth/login";
+import SignupPage from "./pages/auth/register";
+
 function App() {
   return (
-    <div className="flex flex-col items-center max-w-screen h-dvh">
-      Write up
-    </div>
+    <Routes>
+      <Route index element={<div>Hello</div>} />
+      <Route path="/auth/login" element={<LoginPage />} />
+      <Route path="/auth/register" element={<SignupPage />} />
+    </Routes>
   );
 }
 
