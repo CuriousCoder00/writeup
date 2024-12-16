@@ -14,7 +14,6 @@ export const middleware = (req: Request, res: Response, next: NextFunction) => {
             return
         }
         const decoded = jwt.verify(token, process.env.AUTH_SECRET as string) as JwtPayload;
-        console.log(decoded.id, decoded.email)
         req.user = {
             id: decoded.id,
             email: decoded.email
