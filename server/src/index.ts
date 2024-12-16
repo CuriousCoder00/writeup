@@ -1,9 +1,8 @@
 import express from "express";
-import { authRoutes } from "./routes";
+import { authRoutes, postRoutes, userRoutes } from "./routes";
 import dotenv from "dotenv";
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import { postRoutes } from "./routes/post.routes";
 
 dotenv.config();
 
@@ -14,6 +13,7 @@ app.use(cookieParser());
 
 app.use("/api/v1/auth", authRoutes)
 app.use("/api/v1/post", postRoutes)
+app.use("/api/v1/user", userRoutes)
 
 app.listen(3000, () => {
     console.log("Server is running on port 3000")
