@@ -7,6 +7,9 @@ export const loginService = async (data: UserLoginInput) => {
         const response = await axios.post(AUTH_URL + '/login', data, {
             withCredentials: true,
         }) as AxiosResponse;
+        if (response.data.token) {
+            localStorage.setItem('token', response.data.token);
+        }
         return { message: response.data.message, status: response.status };
     } catch (error) {
         if (axios.isAxiosError(error)) {
