@@ -70,6 +70,8 @@ export default {
           "50%": { opacity: "0.8" },
         },
       },
+
+	
   	}
   },
   plugins: [require("tailwindcss-animate")],
