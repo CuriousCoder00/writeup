@@ -7,14 +7,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import AuthForm from "./auth-form";
 import { AuthInput } from "./auth-input";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Loader } from "lucide-react";
 import { signupService } from "@/lib/services/auth.services";
 const SignupForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
+
   const { toast } = useToast();
+
+  const navigate = useNavigate();
+
   const form = useForm<UserSignupInput>({
     resolver: zodResolver(userSignupSchema),
     defaultValues: {
@@ -33,6 +37,9 @@ const SignupForm = () => {
         title: res.message,
         variant: res.status ? "default" : "destructive",
       });
+      if (res.status === 200 || res.status === 201 || res.status === 204) {
+        navigate("/auth/login");
+      }
     } catch (error) {
       toast({
         title: (error as Error).message,
