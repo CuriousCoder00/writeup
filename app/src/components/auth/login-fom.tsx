@@ -11,6 +11,7 @@ import { Link } from "react-router";
 import { useState } from "react";
 import { Loader } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { loginService } from "@/lib/services/auth.services";
 
 const LoginForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -23,22 +24,16 @@ const LoginForm = () => {
     },
   });
 
-  const login = async (data: UserLoginInput) => {
+  const handleLogin = async (data: UserLoginInput) => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/api/v1/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      const result = await response.json();
+      const res = await loginService(data);
       toast({
-        title: result.message,
-        variant: response.ok ? "default" : "destructive",
+        title: res.message,
+        variant: res.status === 200 ? "default" : "destructive",
       });
     } catch (error) {
+      console.log(error)
       toast({
         title: (error as Error).message,
         variant: "destructive",
@@ -52,7 +47,7 @@ const LoginForm = () => {
     <AuthForm form={form}>
       <form
         className="flex flex-col w-full gap-4 my-4"
-        onSubmit={form.handleSubmit(login)}
+        onSubmit={form.handleSubmit(handleLogin)}
       >
         <AuthInput
           form={form}

@@ -11,6 +11,7 @@ import { Link } from "react-router";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Loader } from "lucide-react";
+import { signupService } from "@/lib/services/auth.services";
 const SignupForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
@@ -27,20 +28,10 @@ const SignupForm = () => {
   const signup = async (data: UserSignupInput) => {
     setLoading(true);
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/v1/auth/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-      const result = await response.json();
+      const res = await signupService(data);
       toast({
-        title: result.message,
-        variant: response.ok ? "default" : "destructive",
+        title: res.message,
+        variant: res.status ? "default" : "destructive",
       });
     } catch (error) {
       toast({
