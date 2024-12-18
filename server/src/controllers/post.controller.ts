@@ -32,7 +32,7 @@ export const createPost = async (req: Request, res: Response) => {
 
 export const getAllPosts = async (req: Request, res: Response) => {
     try {
-        const authorId = req.user?.id;
+        const authorId = req.params?.userid;
         const data = await db.post.findMany(
             {
                 where: {

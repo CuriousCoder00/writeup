@@ -51,7 +51,9 @@ export const loginUser = async (req: Request, res: Response) => {
             id: user.id, email: user
                 .email
         }, process.env.AUTH_SECRET as string, { expiresIn: "1h" });
-        res.cookie("token", token, { httpOnly: true, sameSite: 'none', secure: true }).status(200).json({ message: "Login successful", user, token });
+        // set cookie
+
+        res.cookie("token", token, { httpOnly: true, sameSite: 'none', secure: true,  }).status(200).json({ message: "Login successful", user, token });
         return;
     } catch (error: any) {
         res.status(500).json({ error: error.message });

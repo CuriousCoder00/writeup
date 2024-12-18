@@ -1,6 +1,7 @@
 import {
   userLoginSchema,
   UserLoginInput,
+  User,
 } from "@/lib/validations/user.validator";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,8 +33,9 @@ const LoginForm = () => {
         title: res.message,
         variant: res.status === 200 ? "default" : "destructive",
       });
+      localStorage.setItem("userId", res.user.id);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast({
         title: (error as Error).message,
         variant: "destructive",

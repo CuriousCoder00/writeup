@@ -1,21 +1,17 @@
 import axios, { AxiosResponse } from "axios";
 import { UserLoginInput, UserSignupInput } from "../validations/user.validator";
-import { AUTH_URL } from "../constants";
+import {axiosInstance, configOptions} from "./api.config";
 
-const config = {
-    headers: {
-        'Content-Type': 'application/json',
-    },
-}
+
 
 export const loginService = async (data: UserLoginInput) => {
     try {
-        const response = await axios.post(AUTH_URL + '/login', data, config
+        const response = await axiosInstance.post('/auth/login', data, configOptions
         ) as AxiosResponse;
         if (response.data.token) {
             localStorage.setItem('token', response.data.token);
         }
-        return { message: response.data.message, status: response.status };
+        return { message: response.data.message, status: response.status, user: response.data.user };
     } catch (error) {
         if (axios.isAxiosError(error)) {
             return { message: error.response?.data.message };
@@ -26,7 +22,7 @@ export const loginService = async (data: UserLoginInput) => {
 
 export const signupService = async (data: UserSignupInput) => {
     try {
-        const response = await axios.post(AUTH_URL + '/register', data, config) as AxiosResponse;
+        const response = await axiosInstance.post('/auth/register', data, configOptions) as AxiosResponse;
         return { message: response.data.message, status: response.status };
     } catch (error) {
         if (axios.isAxiosError(error)) {

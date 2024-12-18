@@ -14,7 +14,7 @@ const Header = () => {
           <div className="flex items-center justify-center gap-4 max-md:hidden">
             {links.map((link, idx) => (
               <Link
-                className={`no-underline relative group hover:dark:text-sky-400 hover:text-sky-600 text-gray-600 dark:text-gray-400 ${
+                className={`no-underline relative group text-base hover:dark:text-sky-400 hover:text-sky-600 text-gray-600 dark:text-gray-400 ${
                   currentPath === link.href
                     ? "dark:text-sky-400 text-sky-600"
                     : ""

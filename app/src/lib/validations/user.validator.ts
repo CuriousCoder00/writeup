@@ -15,5 +15,15 @@ export const userSignupSchema = z.object({
     path: ["confirmPassword"],
 });
 
+export const User = z.object({
+    id: z.string().uuid(),
+    name: z.string(),
+    email: z.string().email(),
+    password: z.string(),
+    createdAt: z.string().transform((val) => new Date(val)),
+    updatedAt: z.string().transform((val) => new Date(val)),
+})
+
+export type User = z.infer<typeof User>
 export type UserLoginInput = z.infer<typeof userLoginSchema>
 export type UserSignupInput = z.infer<typeof userSignupSchema>
