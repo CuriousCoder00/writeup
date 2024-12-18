@@ -1,4 +1,12 @@
-import { ApplyThemeProps, Attribute, DefaultContextProps, ScriptOptions, SetThemeFunction, ThemeProviderProps, UseThemeProps } from "@/lib/types";
+import {
+  ApplyThemeProps,
+  Attribute,
+  DefaultContextProps,
+  ScriptOptions,
+  SetThemeFunction,
+  ThemeProviderProps,
+  UseThemeProps,
+} from "@/lib/types";
 import * as React from "react";
 
 const script = (
@@ -9,7 +17,7 @@ const script = (
   themes: ScriptOptions["themes"],
   value: ScriptOptions["value"],
   enableSystem: ScriptOptions["enableSystem"],
-  enableColorScheme: ScriptOptions["enableColorScheme"],
+  enableColorScheme: ScriptOptions["enableColorScheme"]
 ): void => {
   const el = document.documentElement;
   const systemThemes = ["light", "dark"];
@@ -80,13 +88,12 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
 
 const defaultThemes = ["light", "dark"];
 
-const Theme = 
-({
+const Theme = ({
   forcedTheme,
   disableTransitionOnChange = false,
   enableSystem = true,
   enableColorScheme = true,
-  storageKey = "theme",
+  storageKey = "writeup_theme",
   themes = defaultThemes,
   defaultTheme = enableSystem ? "system" : "light",
   attribute = "data-theme",
@@ -96,13 +103,12 @@ const Theme =
   scriptProps,
 }: ThemeProviderProps) => {
   const [theme, setThemeState] = React.useState(() =>
-    getTheme(storageKey, defaultTheme),
+    getTheme(storageKey, defaultTheme)
   );
   const [resolvedTheme, setResolvedTheme] = React.useState(() =>
-    getTheme(storageKey),
+    getTheme(storageKey)
   );
   const attrs = !value ? themes : Object.values(value);
-
 
   const applyTheme = React.useCallback(
     (theme: ApplyThemeProps["theme"]) => {
@@ -147,7 +153,7 @@ const Theme =
 
       enable?.();
     },
-    [nonce],
+    [nonce]
   );
 
   const setTheme: SetThemeFunction = React.useCallback(
@@ -162,7 +168,7 @@ const Theme =
         // Unsupported
       }
     },
-    [theme],
+    [theme]
   );
 
   const handleMediaQuery = React.useCallback(
@@ -174,7 +180,7 @@ const Theme =
         applyTheme("system");
       }
     },
-    [theme, forcedTheme],
+    [theme, forcedTheme]
   );
 
   // Always listen to System preference
@@ -224,7 +230,7 @@ const Theme =
         | "dark"
         | undefined,
     }),
-    [theme, setTheme, forcedTheme, resolvedTheme, enableSystem, themes],
+    [theme, setTheme, forcedTheme, resolvedTheme, enableSystem, themes]
   );
 
   return (
@@ -283,7 +289,7 @@ const ThemeScript = React.memo(
         }}
       />
     );
-  },
+  }
 );
 
 // Helpers
@@ -303,8 +309,8 @@ const disableAnimation = (nonce?: string) => {
   if (nonce) css.setAttribute("nonce", nonce);
   css.appendChild(
     document.createTextNode(
-      `*,*::before,*::after{-webkit-transition:none!important;-moz-transition:none!important;-o-transition:none!important;-ms-transition:none!important;transition:none!important}`,
-    ),
+      `*,*::before,*::after{-webkit-transition:none!important;-moz-transition:none!important;-o-transition:none!important;-ms-transition:none!important;transition:none!important}`
+    )
   );
   document.head.appendChild(css);
 

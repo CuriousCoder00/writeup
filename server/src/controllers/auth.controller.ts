@@ -53,7 +53,7 @@ export const loginUser = async (req: Request, res: Response) => {
         }, process.env.AUTH_SECRET as string, { expiresIn: "1h" });
         // set cookie
 
-        res.cookie("token", token, { httpOnly: true, sameSite: 'none', secure: true,  }).status(200).json({ message: "Login successful", user, token });
+        res.cookie("writeup_token", token, { httpOnly: true, sameSite: 'none', secure: true, }).status(200).json({ message: "Login successful", user, token });
         return;
     } catch (error: any) {
         res.status(500).json({ error: error.message });
@@ -62,7 +62,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
 export const logoutUser = async (req: Request, res: Response) => {
     try {
-        res.clearCookie("token").status(200).json({ message: "Logout successful" });
+        res.clearCookie("writeup_token").status(200).json({ message: "Logout successful" });
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }

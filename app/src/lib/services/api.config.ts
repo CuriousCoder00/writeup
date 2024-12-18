@@ -4,7 +4,7 @@ import { API_BASE_URL } from "../constants";
 export const axiosInstance = axios.create({
     baseURL: API_BASE_URL,
     withCredentials: true,
-    timeout: 10000,
+    // timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -23,7 +23,7 @@ axiosInstance.interceptors.response.use((response) => {
 }, (error) => {
     if (error.response?.status === 401) {
         localStorage.removeItem('token');
-        window.location.href = '/login';
+        window.location.href = '/auth/login';
     }
     return Promise.reject(error);
 });

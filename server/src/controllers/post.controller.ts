@@ -30,13 +30,16 @@ export const createPost = async (req: Request, res: Response) => {
     }
 }
 
-export const getAllPosts = async (req: Request, res: Response) => {
+export const getAllUserPosts = async (req: Request, res: Response) => {
     try {
         const authorId = req.params?.userid;
         const data = await db.post.findMany(
             {
                 where: {
                     authorId
+                },
+                include: {
+                    author: true
                 }
             }
         );
@@ -50,7 +53,7 @@ export const getAllPosts = async (req: Request, res: Response) => {
 
 export const getPostById = async (req: Request, res: Response) => {
     try {
-        const id = req.params.id;
+        const id = parseInt(req.params.id);
         if (!id) {
             res.status(400).json({ message: "Post ID is required" });
             return
@@ -74,7 +77,7 @@ export const getPostById = async (req: Request, res: Response) => {
 
 export const deletePostById = async (req: Request, res: Response) => {
     try {
-        const id = req.params.id;
+        const id = parseInt(req.params.id);
         if (!id) {
             res.status(400).json({ message: "Post ID is required" });
             return
@@ -116,7 +119,7 @@ export const deletePostById = async (req: Request, res: Response) => {
 
 export const updatePostById = async (req: Request, res: Response) => {
     try {
-        const id = req.params.id;
+        const id = parseInt(req.params.id);
         if (!id) {
             res.status(400).json({ message: "Post ID is required" });
             return
@@ -156,6 +159,22 @@ export const updatePostById = async (req: Request, res: Response) => {
         res.status(200).json({ message: "Post updated successfully", data });
         return
     } catch (error: any) {
+        res.status(500).json({ error: error.message });
+        return
+    }
+}
+
+export const getAllPosts = async (req: Request, res: Response) => {
+    try {
+        const data = await db.post.findMany({
+            include: {
+                author: true,
+            }
+        });
+        res.status(200).json({ message: "All posts", data });
+        return
+    }
+    catch (error: any) {
         res.status(500).json({ error: error.message });
         return
     }

@@ -1,6 +1,8 @@
 import { Link, useLocation } from "react-router";
 import { links } from "@/lib/constants";
 import ThemeToggle from "./theme-toggle";
+import { Button } from "./ui/button";
+import { logoutService } from "@/lib/services/auth.services";
 const Header = () => {
   const location = useLocation();
   const currentPath = location.pathname;
@@ -33,9 +35,13 @@ const Header = () => {
               </Link>
             ))}
           </div>
-          <Link to='/auth/login' className="px-5 py-2 rounded bg-sky-600 text-white dark:bg-sky-700 ">
+          <Link
+            to="/auth/login"
+            className="px-5 py-2 rounded bg-sky-600 text-white dark:bg-sky-700 "
+          >
             Login
           </Link>
+          <Button onClick={logoutService}>Logout</Button>
           <ThemeToggle />
         </div>
       </nav>

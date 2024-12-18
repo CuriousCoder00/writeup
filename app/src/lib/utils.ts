@@ -18,3 +18,7 @@ export const getType = (value: ParamsType | QueryType, body: any): { params?: an
   }
   return {};
 };
+
+export const dateToString = (date: Date) => {
+  return new Date(date).toISOString().split("T")[0];
+}
