@@ -22,28 +22,8 @@ axiosInstance.interceptors.response.use((response) => {
     return response;
 }, (error) => {
     if (error.response?.status === 401) {
-        localStorage.removeItem('token');
+        localStorage.removeItem('writeup_token');
         window.location.href = '/auth/login';
     }
     return Promise.reject(error);
 });
-
-export const setAuthToken = (token: string) => {
-    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-}
-
-export const removeAuthToken = () => {
-    delete axiosInstance.defaults.headers.common['Authorization'];
-}
-
-export const getAuthToken = () => {
-    return localStorage.getItem('token');
-}
-
-export const isLoggedIn = () => {
-    return !!localStorage.getItem('token');
-}
-
-export const logout = () => {
-    localStorage.removeItem('token');
-}

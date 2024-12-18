@@ -36,6 +36,7 @@ export const logoutService = async () => {
         await axiosInstance.post('/auth/logout');
         localStorage.removeItem('writeup_token');
         localStorage.removeItem('writeup_userId');
+        window.location.href = '/auth/login';
         return { message: "Logout successful" };
     } catch (error) {
         if (axios.isAxiosError(error)) {

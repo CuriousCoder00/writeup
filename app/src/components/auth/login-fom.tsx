@@ -32,8 +32,10 @@ const LoginForm = () => {
         title: res.message,
         variant: res.status === 200 ? "default" : "destructive",
       });
-      console.log(res);
       localStorage.setItem("writeup_userId", res.user.id as string);
+      if (res.status === 200) {
+        window.location.href = "/posts";
+      }
     } catch (error) {
       console.log(error);
       toast({
