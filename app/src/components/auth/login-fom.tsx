@@ -34,7 +34,7 @@ const LoginForm = () => {
       });
       localStorage.setItem("writeup_userId", res.user.id as string);
       if (res.status === 200) {
-        window.location.href = "/posts";
+        window.location.href = "/";
       }
     } catch (error) {
       console.log(error);

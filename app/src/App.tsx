@@ -1,29 +1,36 @@
 import { Route, Routes } from "react-router";
 import LoginPage from "./pages/auth/login";
 import SignupPage from "./pages/auth/register";
-import AllPostPage from "./pages/posts/all-posts";
 import UserPostPage from "./pages/posts/user-posts";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { isAuthenticated } from "./lib/store/atoms";
+import { useSetRecoilState } from "recoil";
+import { isAuthenticated, sessionState } from "./lib/store/atoms";
 import { useEffect } from "react";
+import { useSession } from "./hooks/use-session";
+import Home from "./pages/home";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isAuthenticated);
+  const setIsLoggedIn = useSetRecoilState(isAuthenticated);
+  const setState = useSetRecoilState(sessionState);
+  const { session } = useSession();
   useEffect(() => {
     const token = localStorage.getItem("writeup_token");
+    const user = localStorage.getItem("writeup_user");
+    if (token && user) {
+      setState({ user: JSON.parse(user), token });
+    }
     if (token) {
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
     }
     console.log("App mounted");
-  }, [setIsLoggedIn]);
+    console.log(session);
+  }, [setIsLoggedIn, setState]);
   return (
     <Routes>
-      <Route index element={<div className="mt-20">Hello</div>} />
+      <Route index element={<Home />} />
       <Route path="/auth/login" element={<LoginPage />} />
       <Route path="/auth/register" element={<SignupPage />} />
-      <Route path="/posts" element={<AllPostPage />} />
       <Route path="/posts/u" element={<UserPostPage />} />
     </Routes>
   );

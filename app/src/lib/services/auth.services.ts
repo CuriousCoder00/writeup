@@ -7,8 +7,10 @@ export const loginService = async (data: UserLoginInput) => {
         const response = await axiosInstance.post('/auth/login', data
         ) as AxiosResponse;
         console.log(response)
+        const user = response.data.user;
         if (response.data.token) {
             localStorage.setItem('writeup_token', response.data.token);
+            localStorage.setItem('writeup_user', JSON.stringify(user));
         }
         return { message: response.data.message, status: response.status, user: response.data.user };
     } catch (error) {
@@ -34,10 +36,7 @@ export const signupService = async (data: UserSignupInput) => {
 export const logoutService = async () => {
     try {
         await axiosInstance.post('/auth/logout');
-        localStorage.removeItem('writeup_token');
-        localStorage.removeItem('writeup_userId');
-        window.location.href = '/auth/login';
-        return { message: "Logout successful" };
+        return { success: true, message: "Logout successful" };
     } catch (error) {
         if (axios.isAxiosError(error)) {
             return { message: error.response?.data.message };

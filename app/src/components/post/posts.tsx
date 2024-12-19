@@ -16,15 +16,22 @@ export const AllPosts = () => {
   React.useEffect(() => {
     fetchPosts();
   }, []);
-
+  // flex max-w-screen overflow-x-auto flex-nowrap gap-4 p-4 pt-20
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mx-auto w-full px-4 md:px-12">
+    <div className="flex max-w-screen overflow-x-auto flex-nowrap gap-4 p-4 pt-4">
       {loading ? (
         <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-black/25">
           <Loader className="animate-spin" />
         </div>
       ) : posts.length > 0 ? (
-        posts.map((post) => <PostCard key={post.id} {...post} />)
+        posts.map((post) => (
+          <div
+            key={post.id}
+            className="flex items-center justify-center gap-4 min-w-96 min-h-40"
+          >
+            <PostCard {...post} />
+          </div>
+        ))
       ) : (
         <div className="text-center w-full">No posts available</div>
       )}

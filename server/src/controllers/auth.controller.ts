@@ -24,7 +24,7 @@ export const createUser = async (req: Request, res: Response) => {
                 password: hashedPassword,
             }
         });
-        res.status(201).json({ message: "User created successfully", user });
+        res.status(201).json({ message: "User created successfully" });
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
@@ -53,7 +53,11 @@ export const loginUser = async (req: Request, res: Response) => {
         }, process.env.AUTH_SECRET as string, { expiresIn: "1h" });
         // set cookie
 
-        res.cookie("writeup_token", token, { httpOnly: true, sameSite: 'none', secure: true, }).status(200).json({ message: "Login successful", user, token });
+        res.cookie("writeup_token", token, { httpOnly: true, sameSite: 'none', secure: true, }).status(200).json({
+            message: "Login successful", user: {
+                id: user.id, name: user.name, email: user.email, imageUrl: user.image
+            }, token
+        });
         return;
     } catch (error: any) {
         res.status(500).json({ error: error.message });

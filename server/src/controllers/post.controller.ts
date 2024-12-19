@@ -176,7 +176,11 @@ export const getAllPosts = async (req: Request, res: Response) => {
         const data = await db.post.findMany({
             include: {
                 author: true,
-            }
+                Likes: true
+            },
+            orderBy: {
+                createdAt: "desc"
+            }, take: 10
         });
         res.status(200).json({ message: "All posts", data });
         return
