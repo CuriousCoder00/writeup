@@ -42,11 +42,11 @@ const PostCard = (post: Post) => {
       <CardFooter className="flex justify-between">
         <Button className="bg-background hover:bg-background text-foreground">
           <HeartIcon className="size-40" />
-          <span className="text-xs">2</span>
+          <span className="text-xs">{post.Likes.length}</span>
         </Button>
         <Button className="bg-background hover:bg-background text-foreground">
           <MessageCirclePlus />
-          <span className="text-xs">2</span>
+          <span className="text-xs">{post.Comments.length}</span>
         </Button>
         <Button className="bg-background hover:bg-background text-foreground">
           <Share2 />

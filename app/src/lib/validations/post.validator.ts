@@ -10,6 +10,15 @@ export const postSchema = z.object({
         name: z.string().min(5).max(100),
         email: z.string().email(),
     }),
+    Likes: z.array(z.object({
+        id: z.string().uuid(),
+        userId: z.string().uuid(),
+    })),
+    Comments: z.array(z.object({
+        id: z.string().uuid(),
+        content: z.string().min(5).max(1000),
+        authorId: z.string().uuid(),
+    })),
     createdAt: z.string().transform((val) => new Date(val)),
     updatedAt: z.string().transform((val) => new Date(val)),
 })
