@@ -9,7 +9,7 @@ import {
 import { Delete, Edit, MoreVertical, Share } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
-import { dateToString } from "@/lib/utils";
+import { timeAgo } from "@/lib/utils";
 
 const PostCard = (post: Post) => {
   const userId = localStorage.getItem("writeup_userId");
@@ -26,7 +26,7 @@ const PostCard = (post: Post) => {
       </CardHeader>
       <CardFooter className="flex justify-between">
         <span className="text-xs">{post.author.name}</span>
-        <span className="text-xs">{dateToString(post.createdAt)}</span>
+        <span className="text-xs">{timeAgo(post.createdAt)} ago</span>
       </CardFooter>
     </Card>
   );
@@ -43,7 +43,7 @@ const MoreOptions = () => {
       <PopoverContent
         side="right"
         sideOffset={1}
-        className="flex p-2 mt-2 w-40"
+        className="flex flex-col p-2 mt-20 w-14"
       >
         <Button variant={"ghost"}>
           <Edit />

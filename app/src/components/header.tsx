@@ -1,11 +1,16 @@
 import { Link, useLocation } from "react-router";
 import { links } from "@/lib/constants";
-import ThemeToggle from "./theme-toggle";
+import { ThemeToggle, ThemeToggleWithText } from "./theme-toggle";
 import { Button } from "./ui/button";
 import { logoutService } from "@/lib/services/auth.services";
+import { useRecoilValue } from "recoil";
+import { isAuthenticated } from "@/lib/store/atoms";
+import { ProfileMenu } from "./profile-menu";
+import { LucideLogOut } from "lucide-react";
 const Header = () => {
   const location = useLocation();
   const currentPath = location.pathname;
+  const isLoggedIn = useRecoilValue(isAuthenticated);
   return (
     <header className="flex items-center justify-center fixed top-0 w-full min-h-16 md:px-12 px-4 backdrop-blur-lg dark:bg-black/50 bg-slate-200/50 z-10 border-b shadow-sm">
       <nav className="flex items-center justify-between w-full">
@@ -35,14 +40,28 @@ const Header = () => {
               </Link>
             ))}
           </div>
-          <Link
-            to="/auth/login"
-            className="px-5 py-2 rounded bg-sky-600 text-white dark:bg-sky-700 "
-          >
-            Login
-          </Link>
-          <Button onClick={logoutService}>Logout</Button>
-          <ThemeToggle />
+          {isLoggedIn ? (
+            <ProfileMenu>
+              <Button
+                variant={"ghost"}
+                className="w-full rounded-none flex items-center justify-start pl-3"
+                onClick={logoutService}
+              >
+                <LucideLogOut /> Logout
+              </Button>
+              <ThemeToggleWithText />
+            </ProfileMenu>
+          ) : (
+            <div className="flex gap-2">
+              <Link
+                to="/auth/login"
+                className="px-5 py-2 rounded bg-sky-600 text-white dark:bg-sky-700 "
+              >
+                Login
+              </Link>
+              <ThemeToggle />
+            </div>
+          )}
         </div>
       </nav>
     </header>

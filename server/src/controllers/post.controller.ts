@@ -32,7 +32,11 @@ export const createPost = async (req: Request, res: Response) => {
 
 export const getAllUserPosts = async (req: Request, res: Response) => {
     try {
-        const authorId = req.params?.userid;
+        if (req.user === undefined) {
+            res.status(401).json({ message: "Unauthorized: No user ID" });
+            return
+        }
+        const authorId = req.user.id;
         const data = await db.post.findMany(
             {
                 where: {
@@ -40,7 +44,10 @@ export const getAllUserPosts = async (req: Request, res: Response) => {
                 },
                 include: {
                     author: true
-                }
+                },
+                orderBy: {
+                    createdAt: "desc"
+                },
             }
         );
         res.status(200).json({ message: "All posts", data });
