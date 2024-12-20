@@ -16,9 +16,8 @@ export const AllPosts = () => {
   React.useEffect(() => {
     fetchPosts();
   }, []);
-  // flex max-w-screen overflow-x-auto flex-nowrap gap-4 p-4 pt-20
   return (
-    <div className="flex max-w-screen overflow-x-auto flex-nowrap gap-4 p-4 pt-4">
+    <div className="flex max-w-screen overflow-x-auto flex-nowrap gap-4 p-4 pt-4 relative w-full min-h-40">
       {loading ? (
         <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-black/25">
           <Loader className="animate-spin" />
@@ -47,14 +46,15 @@ export const UserPosts = () => {
     setLoading(true);
     const response = await getUserPosts();
     setLoading(false);
+    localStorage.setItem("writeup_user_posts", JSON.stringify(response.data));
     setPosts(response.data);
   };
   React.useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [setPosts]);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mx-auto w-full px-4 md:px-12">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mx-auto w-full px-4 md:px-12">
       {loading ? (
         <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-black/25">
           <Loader className="animate-spin" />

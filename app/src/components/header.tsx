@@ -7,7 +7,13 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isAuthenticated, sessionState } from "@/lib/store/atoms";
 import { ProfileMenu } from "./profile-menu";
 import { LucideLogOut, Menu } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet";
 import { toast } from "@/hooks/use-toast";
 const Header = () => {
   const location = useLocation();
@@ -49,7 +55,7 @@ const Header = () => {
     }
   };
   return (
-    <header className="flex items-center justify-center fixed top-0 w-full min-h-16 md:px-12 px-4 backdrop-blur-lg dark:bg-black/50 bg-slate-200/50 z-10 border-b shadow-sm">
+    <header className="flex items-center justify-center fixed top-0 w-full min-h-16 md:px-12 px-4 backdrop-blur-2xl dark:bg-black/20 bg-slate-200/20 border-b shadow-md z-[100]">
       <nav className="flex items-center justify-between w-full">
         <Link
           to="/"
@@ -80,6 +86,17 @@ const Header = () => {
                 ></span>
               </Link>
             ))}
+            {isLoggedIn && (
+              <div className="flex items-center justify-center gap-4 max-md:hidden">
+                <Link
+                  className="no-underline relative group text-base hover:dark:text-sky-400 hover:text-sky-600 text-gray-600 dark:text-gray-400"
+                  to={"/posts/u"}
+                >
+                  Your Posts
+                  <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-sky-600 dark:bg-sky-500 rounded transition-transform origin-right scale-x-0 group-hover:origin-left group-hover:scale-x-100 duration-300 ease-in-out"></span>
+                </Link>
+              </div>
+            )}
           </div>
           {isLoggedIn ? (
             <ProfileMenu>
@@ -108,7 +125,23 @@ const Header = () => {
               <SheetTrigger>
                 <Menu />
               </SheetTrigger>
-              <SheetContent className="flex flex-col pt-20">
+
+              <SheetContent side="top" className="flex flex-col z-[101]">
+                <SheetHeader>
+                  <SheetTitle>
+                    <Link
+                      to="/"
+                      className="font-bold text-lg flex items-center gap-1 justify-start"
+                    >
+                      <img
+                        src="/pen.png"
+                        alt="logo"
+                        className="w-7 h-6 dark:invert"
+                      />
+                      Write<span className="text-sky-600">Up</span>
+                    </Link>
+                  </SheetTitle>
+                </SheetHeader>
                 {links.map((link, idx) => (
                   <Link
                     className={`no-underline relative group text-base hover:dark:text-sky-400 hover:text-sky-600 text-gray-600 dark:text-gray-400 ${
@@ -129,6 +162,17 @@ const Header = () => {
                     ></span>
                   </Link>
                 ))}
+                {isLoggedIn && (
+                  <div className="flex flex-col items-start w-full justify-center gap-4 max-md:hidden">
+                    <Link
+                      className="no-underline relative group text-base hover:dark:text-sky-400 hover:text-sky-600 text-gray-600 dark:text-gray-400 w-full"
+                      to={"/posts/u"}
+                    >
+                      Your Posts
+                      <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-sky-600 dark:bg-sky-500 rounded transition-transform origin-right scale-x-0 group-hover:origin-left group-hover:scale-x-100 duration-300 ease-in-out"></span>
+                    </Link>
+                  </div>
+                )}
               </SheetContent>
             </Sheet>
           </div>

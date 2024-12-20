@@ -27,12 +27,14 @@ function App() {
     console.log(session);
   }, [setIsLoggedIn, setState]);
   return (
-    <Routes>
-      <Route index element={<Home />} />
-      <Route path="/auth/login" element={<LoginPage />} />
-      <Route path="/auth/register" element={<SignupPage />} />
-      <Route path="/posts/u" element={<UserPostPage />} />
-    </Routes>
+    <div className="max-w-screen overflow-hidden">
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="/auth/login" element={<LoginPage />} />
+        <Route path="/auth/register" element={<SignupPage />} />
+        <Route path="/posts/u" element={<UserPostPage />} />
+      </Routes>
+    </div>
   );
 }
 

@@ -43,7 +43,9 @@ export const getAllUserPosts = async (req: Request, res: Response) => {
                     authorId
                 },
                 include: {
-                    author: true
+                    author: true,
+                    Likes: true,
+                    Comments: true
                 },
                 orderBy: {
                     createdAt: "desc"

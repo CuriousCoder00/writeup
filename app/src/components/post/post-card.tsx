@@ -13,7 +13,6 @@ import {
   HeartIcon,
   MessageCirclePlus,
   MoreVertical,
-  Share,
   Share2,
 } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -42,11 +41,11 @@ const PostCard = (post: Post) => {
       <CardFooter className="flex justify-between">
         <Button className="bg-background hover:bg-background text-foreground">
           <HeartIcon className="size-40" />
-          <span className="text-xs">{post.Likes.length}</span>
+          <span className="text-xs">{post.Likes?.length}</span>
         </Button>
         <Button className="bg-background hover:bg-background text-foreground">
           <MessageCirclePlus />
-          <span className="text-xs">{post.Comments.length}</span>
+          <span className="text-xs">{post.Comments?.length}</span>
         </Button>
         <Button className="bg-background hover:bg-background text-foreground">
           <Share2 />
@@ -68,16 +67,13 @@ const MoreOptions = () => {
       <PopoverContent
         side="right"
         sideOffset={1}
-        className="flex flex-col p-2 mt-20 w-14"
+        className="flex flex-col p-2 mt-16 w-14"
       >
         <Button variant={"ghost"}>
           <Edit />
         </Button>
         <Button variant={"ghost"}>
           <Delete />
-        </Button>
-        <Button variant={"ghost"}>
-          <Share />
         </Button>
       </PopoverContent>
     </Popover>
