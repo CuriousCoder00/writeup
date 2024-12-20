@@ -1,3 +1,4 @@
+import { Post } from "@/lib/validations/post.validator";
 import { atom } from "recoil";
 
 export const isAuthenticated = atom({
@@ -16,4 +17,9 @@ export const sessionState = atom({
         },
         token: ''
     }
+})
+
+export const postsState = atom({
+    key: 'postsState',
+    default: [] as Post[]
 })

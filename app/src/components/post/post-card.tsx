@@ -18,6 +18,19 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { timeAgo } from "@/lib/utils";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import { deletePost } from "@/lib/services/post.services";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { postsState } from "@/lib/store/atoms";
 
 const PostCard = (post: Post) => {
   const userId = localStorage.getItem("writeup_userId");
@@ -28,7 +41,7 @@ const PostCard = (post: Post) => {
           <CardTitle className="flex w-full flex-wrap border-l-2 border-l-sky-600 pl-3">
             {post.title}
           </CardTitle>
-          {post.authorId === userId && <MoreOptions />}
+          {post.authorId === userId && <MoreOptions postId={post.id} />}
         </div>
         <CardDescription>{post.content}</CardDescription>
       </CardHeader>
@@ -58,7 +71,7 @@ const PostCard = (post: Post) => {
 
 export default PostCard;
 
-const MoreOptions = () => {
+const MoreOptions = ({ postId }: { postId: string }) => {
   return (
     <Popover>
       <PopoverTrigger>
@@ -72,10 +85,55 @@ const MoreOptions = () => {
         <Button variant={"ghost"}>
           <Edit />
         </Button>
+        <DeleteDialog postId={postId} />
+      </PopoverContent>
+    </Popover>
+  );
+};
+
+const DeleteDialog = ({ postId }: { postId: string }) => {
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+  const setPostsData = useSetRecoilState(postsState);
+  const handleDelete = async () => {
+    setLoading(true);
+    const res = await deletePost(postId);
+    if (res) {
+      toast({
+        variant: "default",
+        title: res,
+      });
+      setPostsData((prev) => prev.filter((post) => post.id !== postId));
+    }
+    setLoading(false);
+  };
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
         <Button variant={"ghost"}>
           <Delete />
         </Button>
-      </PopoverContent>
-    </Popover>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Delete Post</DialogTitle>
+          <DialogDescription>
+            Are you sure you want to delete this post?
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex justify-end gap-4">
+          <Button disabled={loading} variant={"ghost"}>
+            Cancel
+          </Button>
+          <Button
+            disabled={loading}
+            variant={"destructive"}
+            onClick={() => handleDelete()}
+          >
+            Delete
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };

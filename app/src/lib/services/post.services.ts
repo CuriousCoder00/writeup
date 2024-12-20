@@ -6,6 +6,9 @@ export const getUserPosts = async () => {
         const response = await axiosInstance.get('/post/all');
         return response.data;
     } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return { message: error.response?.data.message };
+        }
         throw error;
     }
 }
@@ -15,15 +18,21 @@ export const getAllPosts = async () => {
         const response = await axiosInstance.get('/post/');
         return response.data;
     } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return { message: error.response?.data.message };
+        }
         throw error;
     }
 }
 
-export const trendingPosts = async () => {
+export const deletePost = async (id: string) => {
     try {
-        const response = await axios.get('https://api.daily.dev/');
-        return response.data;
+        const response = await axiosInstance.delete(`/post/${id}`);
+        return response.data.message;
     } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return { message: error.response?.data.message };
+        }
         throw error;
     }
 }
