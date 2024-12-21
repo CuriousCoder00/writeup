@@ -20,7 +20,8 @@ export const getType = (value: ParamsType | QueryType, body: any): { params?: an
 };
 
 export const dateToString = (date: Date) => {
-  return new Date(date).toISOString().split("T")[0];
+  const d = new Date(date);
+  return d.toISOString().split("T")[0];
 }
 
 export const timeAgo = (d: Date) => {

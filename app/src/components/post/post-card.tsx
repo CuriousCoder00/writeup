@@ -31,27 +31,30 @@ import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { postsState } from "@/lib/store/atoms";
+import { Link } from "react-router";
 
-const PostCard = (post: Post) => {
+const PostCard = ({ post }: { post: Post }) => {
   const userId = localStorage.getItem("writeup_userId");
   return (
-    <Card className="h-full shadow-inner dark:shadow-slate-600 shadow-slate-300 w-full">
+    <Card className="h-full shadow-inner dark:shadow-slate-600 shadow-slate-300 w-full flex flex-col">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="flex w-full flex-wrap border-l-2 border-l-sky-600 pl-3">
-            {post.title}
+            <Link to={`/posts/${post.id}`}>{post.title}</Link>
           </CardTitle>
           {post.authorId === userId && <MoreOptions postId={post.id} />}
         </div>
-        <CardDescription>{post.content}</CardDescription>
+        <CardDescription>
+          <div className="flex justify-between">
+            <span className="text-xs">{post.author.name}</span>
+            <span className="text-xs">{timeAgo(post.createdAt)} ago</span>
+          </div>
+        </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="flex justify-between">
-          <span className="text-xs">{post.author.name}</span>
-          <span className="text-xs">{timeAgo(post.createdAt)} ago</span>
-        </div>
+      <CardContent className="text-sm dark:text-neutral-400 text-neutral-700">
+        <PostContent content={post.content} id={post.id} />
       </CardContent>
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex justify-between h-full items-end">
         <Button className="bg-background hover:bg-background text-foreground">
           <HeartIcon className="size-40" />
           <span className="text-xs">{post.Likes?.length}</span>
@@ -135,5 +138,17 @@ const DeleteDialog = ({ postId }: { postId: string }) => {
         </div>
       </DialogContent>
     </Dialog>
+  );
+};
+
+const PostContent = ({ content, id }: { content: string; id: string }) => {
+  if (content.length < 250) return <div>{content}</div>;
+  return (
+    <div className="flex flex-col items-start justify-center w-full max-h-52 overflow-hidden">
+      {content.slice(0, 250)}...
+      <Link className="text-sky-600" to={`/posts/${id}`}>
+        Read more
+      </Link>
+    </div>
   );
 };

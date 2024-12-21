@@ -31,7 +31,7 @@ export const AllPosts = () => {
             key={post.id}
             className="flex items-center justify-center gap-4 min-w-96 min-h-40"
           >
-            <PostCard {...post} />
+            <PostCard post={post} />
           </div>
         ))
       ) : (
@@ -75,7 +75,7 @@ export const UserPosts = () => {
           <Loader className="animate-spin" />
         </div>
       ) : postData.length > 0 ? (
-        postData.map((post) => <PostCard key={post.id} {...post} />)
+        postData.map((post) => <PostCard key={post.id} post={post} />)
       ) : (
         <div className="text-center w-full">No posts available</div>
       )}

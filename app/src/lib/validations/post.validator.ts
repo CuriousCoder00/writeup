@@ -23,4 +23,16 @@ export const postSchema = z.object({
     updatedAt: z.string().transform((val) => new Date(val)),
 })
 
+export const createPostSchema = z.object({
+    title: z.string().min(5).max(100),
+    content: z.string().min(5).max(1000),
+})
+
+export const updatePostSchema = z.object({
+    title: z.string().min(5).max(100),
+    content: z.string().min(5).max(1000),
+})
+
 export type Post = z.infer<typeof postSchema>;
+export type CreatePostType = z.infer<typeof createPostSchema>;
+export type updatePostType = z.infer<typeof updatePostSchema>;

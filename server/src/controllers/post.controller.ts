@@ -70,6 +70,10 @@ export const getPostById = async (req: Request, res: Response) => {
         const data = await db.post.findUnique({
             where: {
                 id
+            }, include: {
+                author: true,
+                Likes: true,
+                Comments: true
             }
         });
         if (!data) {

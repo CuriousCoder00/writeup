@@ -7,6 +7,8 @@ import { isAuthenticated, sessionState } from "./lib/store/atoms";
 import { useEffect } from "react";
 import { useSession } from "./hooks/use-session";
 import Home from "./pages/home";
+import CreatePost from "./pages/posts/create-post";
+import ReadPost from "./pages/posts/read-post";
 
 function App() {
   const setIsLoggedIn = useSetRecoilState(isAuthenticated);
@@ -33,6 +35,8 @@ function App() {
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/register" element={<SignupPage />} />
         <Route path="/posts/u" element={<UserPostPage />} />
+        <Route path="/posts/u/create" element={<CreatePost />} />
+        <Route path="/posts/:id" element={<ReadPost />} />
       </Routes>
     </div>
   );

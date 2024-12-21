@@ -89,11 +89,21 @@ const Header = () => {
             {isLoggedIn && (
               <div className="flex items-center justify-center gap-4 max-md:hidden">
                 <Link
-                  className="no-underline relative group text-base hover:dark:text-sky-400 hover:text-sky-600 text-gray-600 dark:text-gray-400"
+                  className={`no-underline relative group text-base hover:dark:text-sky-400 hover:text-sky-600 text-gray-600 dark:text-gray-400 ${
+                    currentPath === "/posts/u"
+                      ? "dark:text-sky-400 text-sky-600"
+                      : ""
+                  }`}
                   to={"/posts/u"}
                 >
                   Your Posts
-                  <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-sky-600 dark:bg-sky-500 rounded transition-transform origin-right scale-x-0 group-hover:origin-left group-hover:scale-x-100 duration-300 ease-in-out"></span>
+                  <span
+                    className={`absolute -bottom-1 left-0 w-full h-[2px] bg-sky-600 dark:bg-sky-500 rounded transition-transform origin-right scale-x-0 group-hover:origin-left group-hover:scale-x-100 duration-300 ease-in-out ${
+                      currentPath === "/posts/u"
+                        ? "scale-x-100 dark:bg-sky-400 bg-sky-700"
+                        : ""
+                    }`}
+                  ></span>
                 </Link>
               </div>
             )}
